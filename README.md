@@ -37,7 +37,12 @@ debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.*'
 releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.*'
 ```
 
-however, squareup not provide LeakCanary 2.* release version to us.
+however, squareup not provide LeakCanary 2.* release version to us, 
+
+you will find why at this link
+https://github.com/square/leakcanary/issues/979
+
+if your team do not have enough resource to test debug version，you can try  this lib.
 
 so,I clone the source code and delete all unnessary code,
 
@@ -70,7 +75,10 @@ debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.*'
 releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.*'
 ```
 
-核心原理就是，release版提供一个同包名的类，里面是空实现。
+核心原理就是，release版提供一个同包名的类，里面是空实现。至于为什么不再提供no-op
+https://github.com/square/leakcanary/issues/979
+
+如果你们也是没有更多的测试资源专门测debug包，必须用一套代码的话，试试我这个。
 
 我这边参考了一下，clone了源代码，删除了不必要的代码，保证完全不会init，完全只提供同包名类，解决包名找不到的编译错误。
 
