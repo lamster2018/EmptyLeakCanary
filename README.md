@@ -1,32 +1,16 @@
 # EmptyLeakCanary
 
-We can implemation LeakCanary 1.* in different version,
 
-Because squareup support release version lib like this 
-
-```
-releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-```
-
-however they are not support it in 2.* anymore.
-
-so i try to give android developers same way to use LeakCanary 2.* when we compile release apk in same code.
+## How to use
 
 ```
 releaseImplementation 'com.lahm.library:leakcanary-android-no-op:0.0.2'
 ```
 
-以前LeakCanary 1.* 版本可以一套代码打包 debug 和 release的包，
-因为squareup提供了com.squareup.leakcanary:leakcanary-android-no-op:1.5.4
-这个库的核心思想就是一个提供一个同类名空实现的类。
+# Documention
+## English
 
-现在LeakCanary2.* 不在提供release版本了，而且debug也不用在application里进行init操作
-这可能造成如下情况
-1. 我们需要设置leakCanary 参数，于是不得不在类里import包；
-2. 但是代码只有一套，打包时需要屏蔽代码，操作麻烦；
-
-这个库只提供最基本的LeakCanary.Config 设置项，可以视为不完美root。
-可以参考
+LeakCanary 2.* no need init in our application, but sometimes we have to set config in our code,maybe like this(java code)
 
 ```java
     private void setLeakCanary2Config() {
@@ -39,5 +23,57 @@ releaseImplementation 'com.lahm.library:leakcanary-android-no-op:0.0.2'
         LeakCanary.setConfig(config);
     }
 ```
+
+We usually need use leak canary only in debug ,not in release.
+
+if we set config and complie release apk,ooops,we will see compile error.
+
+'leakcanary not found'.
+
+Squareup provide us two different versions of LeakCanary 1.* and suggest us use it like
+
+```
+debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.*'
+releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.*'
+```
+
+however, squareup not provide LeakCanary 2.* release version to us.
+
+so,I clone the source code and delete all unnessary code,
+
+it will have zero chance init in your application ,only support you a same name class ,avoid compile error.
+
+## 中文
+LeakCanary 2.* 现在不用在application初始化了，是无感的，但是我们有时候会特别设置它
+比如做一些上传操作之类的
+```java
+    private void setLeakCanary2Config() {
+        LeakCanary.Config config = LeakCanary.getConfig()
+                .newBuilder()
+                .retainedVisibleThreshold(1)
+                .maxStoredHeapDumps(1)
+                .onHeapAnalyzedListener(new TestLeakMemUploader())
+                .build();
+        LeakCanary.setConfig(config);
+    }
+```
+但是我们只需要在debug版本使用LeakCanary，release版本实际上是不需要的，
+
+如果恰巧你需要对它进行设置，而且又只有一套代码，
+
+那你可能就会遇到跟我一样的release编译问题，找不到leakcanary，shark 类。
+
+以前Squareup是提供了两套代码
+
+```
+debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.*'
+releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.*'
+```
+
+核心原理就是，release版提供一个同包名的类，里面是空实现。
+
+我这边参考了一下，clone了源代码，删除了不必要的代码，保证完全不会init，完全只提供同包名类，解决包名找不到的编译错误。
+
+当然，这个库只提供最基础的配置设置。如果你还需要特别多的配置，那再说吧。
 
 
