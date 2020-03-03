@@ -37,9 +37,9 @@ debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.*'
 releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.*'
 ```
 
-however, squareup not provide LeakCanary 2.* release version to us, 
+however, squareup not provide LeakCanary 2.* no-op to us, 
 
-you will find why at this link
+you will find reason at this link
 https://github.com/square/leakcanary/issues/979
 
 if your team do not have enough resource to test debug version，you can try  this lib.
