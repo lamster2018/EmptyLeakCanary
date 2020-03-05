@@ -42,3 +42,5 @@ captures/
 bugly
 # apk file
 /app/official
+/*/debug/
+/*/release/
