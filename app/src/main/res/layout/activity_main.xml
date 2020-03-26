@@ -7,8 +7,9 @@
     tools:context="leakcanary.lahm.emptyleakcanary.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/go"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

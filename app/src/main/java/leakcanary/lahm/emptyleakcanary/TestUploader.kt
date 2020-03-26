@@ -1,10 +1,10 @@
 package leakcanary.lahm.emptyleakcanary
 
-import shark.HeapAnalysisSuccess
-import shark.LeakTrace
 import leakcanary.DefaultOnHeapAnalyzedListener
 import leakcanary.OnHeapAnalyzedListener
 import shark.HeapAnalysis
+import shark.HeapAnalysisSuccess
+import shark.LeakTrace
 
 /**
  * Project Name:EmptyLeakCanary
@@ -22,9 +22,13 @@ class TestLeakMemUploader : OnHeapAnalyzedListener {
             //如果是成功解析
             is HeapAnalysisSuccess -> {
                 val logPath = "leak/"
-                //总是拿最新的一个leak
-                val selectedLeak = heapAnalysis.allLeaks.first()
-                val leakTrace = selectedLeak.leakTraces.first()
+                //总是拿最新的一个leak写入磁盘，不会为null，但是可能为empty抛出异常
+                if (heapAnalysis.allLeaks.iterator().hasNext()) {
+                    val selectedLeak = heapAnalysis.allLeaks.first()
+                    if (selectedLeak.leakTraces.iterator().hasNext()) {
+                        val leakTrace = selectedLeak.leakTraces.first()
+                    }
+                }
             }
         }
         defaultListener.onHeapAnalyzed(heapAnalysis)
