@@ -1,6 +1,6 @@
 package leakcanary.lahm.emptyleakcanary;
 
-import android.app.Application;
+import android.util.Log;
 
 import leakcanary.LeakCanary;
 
@@ -11,11 +11,12 @@ import leakcanary.LeakCanary;
  * <p>
  * More code see my github https://github.com/lamster2018
  */
-public class TestApplication extends Application {
+public class TestApplication extends NormalApplication {
     @Override
     public void onCreate() {
         super.onCreate();
         setLeakCanary2Config();
+        Log.d("leak", "onCreate:TestApplication ");
     }
 
     private void setLeakCanary2Config() {

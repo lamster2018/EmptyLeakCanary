@@ -13,7 +13,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [applicationClassName: "NormalApplication"]
     }
     buildTypes {
         release {
@@ -28,8 +28,14 @@ android {
             zipAlignEnabled true
             minifyEnabled false
             shrinkResources false
+            manifestPlaceholders = [applicationClassName: "TestApplication"]
         }
     }
+
+    sourceSets.debug {
+        java.srcDirs 'src/debugLC/java'
+    }
+
 }
 
 dependencies {
@@ -39,5 +45,5 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
-    releaseImplementation project(':Leakcanary')
+//    releaseImplementation project(':Leakcanary')
 }
