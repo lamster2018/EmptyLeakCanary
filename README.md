@@ -1,5 +1,11 @@
 # EmptyLeakCanary
 
+## BEST WAY
+use sourceSet
+see ⬇️
+
+https://www.jianshu.com/p/285ceaa869de
+
 
 ## How to use
 
